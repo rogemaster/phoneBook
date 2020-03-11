@@ -32,8 +32,14 @@ public class PhoneBookT1 {
 	Map<String, Employee> maplist;
 	
 	static int MODE;
-
+	
 	public PhoneBookT1() throws Exception {
+		view();
+		MODE = 0;
+		fileReader();
+	}
+	
+	public void view() throws Exception {
 		// TODO Auto-generated constructor stub
 		
 		mainFrame = new JFrame();
@@ -67,10 +73,6 @@ public class PhoneBookT1 {
 		mainPanel.add(inputField);
 		
 		mainFrame.setContentPane(mainPanel);
-		
-		fileReader();
-		
-		
 		mainFrame.setVisible(true);
 		
 	}
@@ -125,10 +127,17 @@ public class PhoneBookT1 {
 					inputField.setText("");
 				} else if(MODE == 2 && key == 10) {
 					if(nameChk(inputField.getText(), key) == 1) {
-						String name = maplist.values().toString();
-						System.out.println(name);
+						viewText.setText(Properties.menu_EX2_1);
+						inputField.setText("");
+						if(MODE == 2 && "y".equals(inputField.getText())) {
+							int num = 0;
+							saveList(inputField.getText() + "(" + Integer.toString(num+1) + ")", key);
+						}else if(MODE == 2 && "n".equals(inputField.getText())) {
+							
+						}
+					}else if(nameChk(inputField.getText(), key) == 0){
+						saveList(inputField.getText(), key);
 					}
-					
 				}
 			}
 		};
@@ -148,19 +157,15 @@ public class PhoneBookT1 {
 	public int nameChk(String name, int key) {
 		
 		int rst = 0;
-		
 		if(maplist.containsKey(name)) {
 			System.out.println("있음");
-			viewText.setText(Properties.menu_EX2_1);
-			inputField.setText("");
 			rst = 1;
 		}
-		
 		return rst;
 	}
 
 	// 저장
-	public void saveList(String name, int num) {
+	public void saveList(String name, int key) {
 		if(MODE != 2) {
 			viewText.setText(Properties.Error);
 		}else if(MODE == 2) {
