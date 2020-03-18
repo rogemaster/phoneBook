@@ -30,6 +30,7 @@ public class PhoneBookT1 {
 	JLabel label;
 	
 	Map<String, Employee> maplist;
+	Employee emp;
 	
 	static int MODE;
 	
@@ -86,7 +87,7 @@ public class PhoneBookT1 {
 			
 			if(text == null) break;
 			
-			Employee emp = new Employee(text.split(","));
+			emp = new Employee(text.split(","));
 			maplist.put(emp.name, emp);
 		}
 		
@@ -116,28 +117,39 @@ public class PhoneBookT1 {
 				// TODO Auto-generated method stub
 				
 				int key = e.getKeyCode();
+				String name = "";
 				System.out.println(key);
 				
 				if(key == 10 && inputField.getText().equals("1")) {
 					allList();
 					inputField.setText("");
 				} else if(key == 10 && inputField.getText().equals("2")) {
+					// 2번 메뉴 메시지 실행
 					MODE = 2;
 					viewText.setText(Properties.menu_EX2);
 					inputField.setText("");
 				} else if(MODE == 2 && key == 10) {
-					if(nameChk(inputField.getText(), key) == 1) {
-						viewText.setText(Properties.menu_EX2_1);
-						inputField.setText("");
-						if(MODE == 2 && "y".equals(inputField.getText())) {
-							int num = 0;
-							saveList(inputField.getText() + "(" + Integer.toString(num+1) + ")", key);
-						}else if(MODE == 2 && "n".equals(inputField.getText())) {
-							
-						}
-					}else if(nameChk(inputField.getText(), key) == 0){
-						saveList(inputField.getText(), key);
-					}
+					name = inputField.getText();
+					System.out.println(name);
+					inputField.setText("");
+					nameChk(name);
+				
+				}else if(MODE == 21 && "y".equals(inputField.getText()) && key == 10) {
+					menu2NameSave(name);
+					inputField.setText("");
+				}else if(MODE == 2 && "n".equals(inputField.getText()) && key == 10) {
+					viewText.setText(Properties.menu_EX2_n);
+					MODE = 0;
+				
+				}else if(MODE == 22 && key == 10) {
+					meun2AgeSave(inputField.getText());
+					inputField.setText("");
+				}else if(MODE == 23 && key == 10) {
+					menu2DepSave(inputField.getText());
+					inputField.setText("");
+				}else if(MODE == 24 && key == 10) {
+					menu2PhoneSave(inputField.getText());
+					inputField.setText("");
 				}
 			}
 		};
@@ -154,26 +166,52 @@ public class PhoneBookT1 {
 	}
 	
 	//필터 - 입력한 이름 검사 메소드
-	public int nameChk(String name, int key) {
+	public void nameChk(String name) {
 		
-		int rst = 0;
 		if(maplist.containsKey(name)) {
 			System.out.println("있음");
-			rst = 1;
-		}
-		return rst;
-	}
-
-	// 저장
-	public void saveList(String name, int key) {
-		if(MODE != 2) {
-			viewText.setText(Properties.Error);
-		}else if(MODE == 2) {
-		//	nameChk(name);
+			viewText.setText(Properties.menu_EX2_1);
+			MODE = 21;
+			
+			
+		}else {
+			viewText.setText(Properties.menu_EX2_2);
+			MODE = 22;
+			
 		}
 	}
 	
+	public void menu2NameSave(String name) {
+			System.out.println("여기 찍히나?1");
+			// y 값일 경우
+		int num = 0;
+		emp.setName(name + "(" + Integer.toString(num+1) + ")");
+		viewText.setText(Properties.menu_EX2_2);
+			
+		MODE = 22;
+			
+	}
 	
+	public void meun2AgeSave(String age) {
+		emp.setAge(age);
+		viewText.setText(Properties.menu_EX2_3);
+		
+		MODE = 23;
+	}
+	
+	public void menu2DepSave(String dep) {
+		emp.setDepartment(dep);
+		viewText.setText(Properties.menu_EX2_4);
+		
+		MODE = 24;
+	}
+	
+	public void menu2PhoneSave(String Phone) {
+		emp.setPhonenumber(Phone);
+		viewText.setText(Properties.menu_EX2_5);
+		
+		MODE = 0;
+	}
 	
 	
 	

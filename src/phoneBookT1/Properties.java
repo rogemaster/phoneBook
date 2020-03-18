@@ -15,7 +15,14 @@ public class Properties {
 	
 	static String menu_EX2_1 = "동일한 이름이 존재 합니다.\n"
 							+ "그래도 저장 하시겠습니까(y/n)";
+	static String menu_EX2_2 = "나이를 입력 하세요.";
+	static String menu_EX2_3 = "부서를 입력 하세요.";
+	static String menu_EX2_4 = "연락처를 입력 하세요.";
+	static String menu_EX2_5 = "저장이 완료 되었습니다."
+							+ "메뉴를 선택하세요.";
 	
+	static String menu_EX2_n = "취소되었습니다.\n"
+							+ "메뉴를 선택하세요";
 	  
 	static String Error = "잘못된 입력 입니다.";
 
